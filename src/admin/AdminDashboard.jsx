@@ -37,7 +37,7 @@ import {
   Modal,
 } from "react-bootstrap";
 import MidDayMealLogo from "../images/Mid_day_logo.png";
-import { InfoCircle } from "react-bootstrap-icons";
+import { BsInfoCircle } from "react-icons/bs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
@@ -148,7 +148,9 @@ function AdminDashboard() {
           activeUserList.filter((user) => user.role === "Field Officer")
         );
         setActiveAssistantFOs(
-          activeUserList.filter((user) => user.role === "Assistant Field Officer")
+          activeUserList.filter(
+            (user) => user.role === "Assistant Field Officer"
+          )
         );
         setActiveResearchOfficers(
           activeUserList.filter((user) => user.role === "Research Officer")
@@ -456,12 +458,36 @@ function AdminDashboard() {
     };
   };
 
-  const filteredActiveFOs = paginateData(activeFieldOfficers, currentPage.FO, searchFO);
-  const filteredActiveAFOs = paginateData(activeAssistantFOs, currentPage.AFO, searchAFO);
-  const filteredActiveROs = paginateData(activeResearchOfficers, currentPage.RO, searchRO);
-  const filteredInactiveFOs = paginateData(inactiveFieldOfficers, currentPage.InactiveFO, searchInactiveFO);
-  const filteredInactiveAFOs = paginateData(inactiveAssistantFOs, currentPage.InactiveAFO, searchInactiveAFO);
-  const filteredInactiveROs = paginateData(inactiveResearchOfficers, currentPage.InactiveRO, searchInactiveRO);
+  const filteredActiveFOs = paginateData(
+    activeFieldOfficers,
+    currentPage.FO,
+    searchFO
+  );
+  const filteredActiveAFOs = paginateData(
+    activeAssistantFOs,
+    currentPage.AFO,
+    searchAFO
+  );
+  const filteredActiveROs = paginateData(
+    activeResearchOfficers,
+    currentPage.RO,
+    searchRO
+  );
+  const filteredInactiveFOs = paginateData(
+    inactiveFieldOfficers,
+    currentPage.InactiveFO,
+    searchInactiveFO
+  );
+  const filteredInactiveAFOs = paginateData(
+    inactiveAssistantFOs,
+    currentPage.InactiveAFO,
+    searchInactiveAFO
+  );
+  const filteredInactiveROs = paginateData(
+    inactiveResearchOfficers,
+    currentPage.InactiveRO,
+    searchInactiveRO
+  );
   const filteredAllUsers = registeredUsers
     .filter((user) =>
       `${user.firstName || ""} ${user.lastName || ""}`
@@ -521,7 +547,7 @@ function AdminDashboard() {
     if (
       selectedFile &&
       selectedFile.type ===
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     ) {
       setExcelFile(selectedFile);
       setExcelError("");
@@ -646,7 +672,9 @@ function AdminDashboard() {
     }
     if (typeof timestamp === "string") {
       const date = new Date(timestamp);
-      const result = isNaN(date.getTime()) ? "Not Available" : date.toLocaleString();
+      const result = isNaN(date.getTime())
+        ? "Not Available"
+        : date.toLocaleString();
       console.log("Formatted string timestamp:", result); // **Added**: Debug log
       return result;
     }
@@ -661,9 +689,18 @@ function AdminDashboard() {
         background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
       }}
     >
-      <Navbar bg="primary" variant="dark" expand="lg" sticky="top" className="shadow-sm">
+      <Navbar
+        bg="primary"
+        variant="dark"
+        expand="lg"
+        sticky="top"
+        className="shadow-sm"
+      >
         <Container fluid>
-          <Navbar.Brand href="/admin_dashboard" className="d-flex align-items-center">
+          <Navbar.Brand
+            href="/admin_dashboard"
+            className="d-flex align-items-center"
+          >
             <img
               src={MidDayMealLogo}
               alt="Mid Day Meal Logo"
@@ -680,6 +717,14 @@ function AdminDashboard() {
             </Nav.Link>
             <Nav.Link as={Link} to="/about_us" className="text-white">
               About Us
+            </Nav.Link>
+            <Nav.Link
+              href="https://schemewatch-inky.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white"
+            >
+              Analytics
             </Nav.Link>
           </Nav>
           <Button
@@ -702,14 +747,17 @@ function AdminDashboard() {
             Back
           </button>
         </div>
-        
-        <Card className="shadow-lg mb-4 border-0" style={{ borderRadius: "15px", background: "white" }}>
+
+        <Card
+          className="shadow-lg mb-4 border-0"
+          style={{ borderRadius: "15px", background: "white" }}
+        >
           <Card.Body className="p-4">
             <div className="d-flex align-items-center justify-content-center mb-4">
               <h3 className="fw-bold m-0" style={{ color: "#333" }}>
                 Upload District & Taluka Data
               </h3>
-              <InfoCircle
+              <BsInfoCircle
                 size={24}
                 className="ms-2 text-primary"
                 style={{ cursor: "pointer" }}
@@ -752,12 +800,18 @@ function AdminDashboard() {
           </Card.Body>
         </Card>
 
-        <Modal show={showExcelModal} onHide={() => setShowExcelModal(false)} centered>
+        <Modal
+          show={showExcelModal}
+          onHide={() => setShowExcelModal(false)}
+          centered
+        >
           <Modal.Header closeButton>
             <Modal.Title>Excel File Format</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>The Excel file must contain the following columns in this order:</p>
+            <p>
+              The Excel file must contain the following columns in this order:
+            </p>
             <Table striped bordered hover>
               <thead>
                 <tr>
@@ -776,16 +830,18 @@ function AdminDashboard() {
                 </tr>
               </tbody>
             </Table>
-            <p>
+            <div>
               <strong>Instructions:</strong>
               <ul>
                 <li>First column: Unique district code (e.g., D001).</li>
                 <li>Second column: District name.</li>
                 <li>Third column: Taluka name.</li>
                 <li>Fourth column: Unique taluka code (e.g., T001).</li>
-                <li>Ensure no empty rows or missing values in required columns.</li>
+                <li>
+                  Ensure no empty rows or missing values in required columns.
+                </li>
               </ul>
-            </p>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button
@@ -807,16 +863,31 @@ function AdminDashboard() {
       </Container>
 
       <Container className="py-4">
-        <Card className="shadow-lg mb-4 border-0" style={{ borderRadius: "15px", background: "white" }}>
+        <Card
+          className="shadow-lg mb-4 border-0"
+          style={{ borderRadius: "15px", background: "white" }}
+        >
           <Card.Body className="p-4">
             <h3 className="text-center mb-4 fw-bold" style={{ color: "#333" }}>
               Quick Navigation
             </h3>
             <div className="d-flex flex-wrap justify-content-center gap-3">
               {[
-                { to: "/parent-feedback", text: "Parent Feedback", color: "info" },
-                { to: "/school-feedback", text: "School Feedback", color: "warning" },
-                { to: "/observation-feedback", text: "Observation Feedback", color: "success" },
+                {
+                  to: "/parent-feedback",
+                  text: "Parent Feedback",
+                  color: "info",
+                },
+                {
+                  to: "/school-feedback",
+                  text: "School Feedback",
+                  color: "warning",
+                },
+                {
+                  to: "/observation-feedback",
+                  text: "Observation Feedback",
+                  color: "success",
+                },
                 { to: "/find-school", text: "Find School", color: "primary" },
               ].map((nav, idx) => (
                 <Button
@@ -834,16 +905,47 @@ function AdminDashboard() {
           </Card.Body>
         </Card>
 
-        <Card className="shadow-lg mb-4 border-0" style={{ borderRadius: "15px", background: "white" }}>
+        <Card
+          className="shadow-lg mb-4 border-0"
+          style={{ borderRadius: "15px", background: "white" }}
+        >
           <Card.Body className="p-4 d-flex justify-content-around text-center flex-wrap">
             {[
-              { label: "Active FOs", count: activeFieldOfficers.length, color: "success" },
-              { label: "Active AFOs", count: activeAssistantFOs.length, color: "info" },
-              { label: "Active ROs", count: activeResearchOfficers.length, color: "primary" },
-              { label: "Inactive FOs", count: inactiveFieldOfficers.length, color: "danger" },
-              { label: "Inactive AFOs", count: inactiveAssistantFOs.length, color: "warning" },
-              { label: "Inactive ROs", count: inactiveResearchOfficers.length, color: "secondary" },
-              { label: "Registered Users", count: registeredUsers.length, color: "dark" },
+              {
+                label: "Active FOs",
+                count: activeFieldOfficers.length,
+                color: "success",
+              },
+              {
+                label: "Active AFOs",
+                count: activeAssistantFOs.length,
+                color: "info",
+              },
+              {
+                label: "Active ROs",
+                count: activeResearchOfficers.length,
+                color: "primary",
+              },
+              {
+                label: "Inactive FOs",
+                count: inactiveFieldOfficers.length,
+                color: "danger",
+              },
+              {
+                label: "Inactive AFOs",
+                count: inactiveAssistantFOs.length,
+                color: "warning",
+              },
+              {
+                label: "Inactive ROs",
+                count: inactiveResearchOfficers.length,
+                color: "secondary",
+              },
+              {
+                label: "Registered Users",
+                count: registeredUsers.length,
+                color: "dark",
+              },
             ].map((stat, idx) => (
               <div key={idx} className="p-2">
                 <Badge bg={stat.color} className="p-2 fs-6">
@@ -854,7 +956,10 @@ function AdminDashboard() {
           </Card.Body>
         </Card>
 
-        <Card className="shadow-lg mb-4 border-0" style={{ borderRadius: "15px", background: "white" }}>
+        <Card
+          className="shadow-lg mb-4 border-0"
+          style={{ borderRadius: "15px", background: "white" }}
+        >
           <Card.Body style={{ height: "400px" }}>
             {loading ? (
               <div className="text-center mt-5">
@@ -958,7 +1063,9 @@ function AdminDashboard() {
                           <th>Status</th>
                           <th>Name</th>
                           <th>Email</th>
-                          <th>{section.isActive ? "Last Active" : "Last Inactive"}</th>
+                          <th>
+                            {section.isActive ? "Last Active" : "Last Inactive"}
+                          </th>
                           {!section.isActive && <th>Actions</th>}
                         </tr>
                       </thead>
@@ -973,12 +1080,16 @@ function AdminDashboard() {
                                     width: "10px",
                                     height: "10px",
                                     borderRadius: "50%",
-                                    backgroundColor: section.isActive ? "#4CAF50" : "#FF5722",
+                                    backgroundColor: section.isActive
+                                      ? "#4CAF50"
+                                      : "#FF5722",
                                     marginRight: "10px",
                                   }}
                                 />
                               </td>
-                              <td>{`${user.firstName || "N/A"} ${user.lastName || "N/A"}`}</td>
+                              <td>{`${user.firstName || "N/A"} ${
+                                user.lastName || "N/A"
+                              }`}</td>
                               <td>{user.email || "N/A"}</td>
                               <td>
                                 {section.isActive
@@ -991,7 +1102,11 @@ function AdminDashboard() {
                                     variant="outline-danger"
                                     size="sm"
                                     onClick={() => {
-                                      if (window.confirm("Are you sure you want to delete this user?")) {
+                                      if (
+                                        window.confirm(
+                                          "Are you sure you want to delete this user?"
+                                        )
+                                      ) {
                                         handleDeleteUser(user.id);
                                       }
                                     }}
@@ -1005,7 +1120,10 @@ function AdminDashboard() {
                           ))
                         ) : (
                           <tr>
-                            <td colSpan={section.isActive ? 4 : 5} className="text-center">
+                            <td
+                              colSpan={section.isActive ? 4 : 5}
+                              className="text-center"
+                            >
                               No {section.title.toLowerCase()} found
                             </td>
                           </tr>
@@ -1013,7 +1131,11 @@ function AdminDashboard() {
                       </tbody>
                     </Table>
                     {section.data.length > 0 &&
-                      renderPagination(section.totalPages, currentPage[section.page], section.page)}
+                      renderPagination(
+                        section.totalPages,
+                        currentPage[section.page],
+                        section.page
+                      )}
                   </Accordion.Body>
                 </Accordion.Item>
               </Accordion>
@@ -1021,7 +1143,10 @@ function AdminDashboard() {
           </Card>
         ))}
 
-        <Card className="shadow-lg mb-4 border-0" style={{ borderRadius: "15px", background: "white" }}>
+        <Card
+          className="shadow-lg mb-4 border-0"
+          style={{ borderRadius: "15px", background: "white" }}
+        >
           <Card.Body className="p-4">
             <h4 className="fw-bold mb-3 text-dark">All Registered Users</h4>
             <Form.Control
@@ -1048,7 +1173,7 @@ function AdminDashboard() {
                 {filteredAllUsers.length > 0 ? (
                   filteredAllUsers.map((user) => {
                     console.log("Rendering user:", user);
-                    
+
                     return (
                       <tr key={user.id}>
                         <td>
@@ -1058,23 +1183,33 @@ function AdminDashboard() {
                               width: "10px",
                               height: "10px",
                               borderRadius: "50%",
-                              backgroundColor: user.isActive ? "#4CAF50" : "#FF5722",
+                              backgroundColor: user.isActive
+                                ? "#4CAF50"
+                                : "#FF5722",
                               marginRight: "10px",
                             }}
                           />
                         </td>
                         <td>{user.employeeId}</td>
-                        <td>{(`${user.firstName} ${user.lastName}`.trim() || "N/A").toUpperCase()}</td>
+                        <td>
+                          {(
+                            `${user.firstName} ${user.lastName}`.trim() || "N/A"
+                          ).toUpperCase()}
+                        </td>
                         <td>{user.email}</td>
                         <td>{user.role}</td>
                         <td>
-                        {user.isActive ? "N/A" : formatTimestamp(user.lastInactive)}
+                          {user.isActive
+                            ? "N/A"
+                            : formatTimestamp(user.lastInactive)}
                         </td>
                         <td>
                           <Button
                             variant="outline-primary"
                             size="sm"
-                            onClick={() => navigate(`/update-register/${user.id}`)}
+                            onClick={() =>
+                              navigate(`/update-register/${user.id}`)
+                            }
                             style={{ borderRadius: "8px", marginRight: "5px" }}
                           >
                             Edit
@@ -1083,7 +1218,11 @@ function AdminDashboard() {
                             variant="outline-danger"
                             size="sm"
                             onClick={() => {
-                              if (window.confirm("Are you sure you want to delete this user?")) {
+                              if (
+                                window.confirm(
+                                  "Are you sure you want to delete this user?"
+                                )
+                              ) {
                                 handleDeleteUser(user.id);
                               }
                             }}
